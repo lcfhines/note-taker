@@ -1,14 +1,17 @@
-const router = require('express').Router();
+const htmlRouter = require('express').Router();
+const path = require('path');
 
 
 // HTML ROUTES
-    // GET - HOME PAGE
 
-router.get("/", (req, res) => {
-    res.send("This is the homepage")
-})
+// GET - homepage
+htmlRouter.get('/', (req, res) => 
+res.sendFile(path.join(__dirname, '../public/index.html'))
+);
 
+// GET - notes
+htmlRouter.get('/notes', (req, res) => 
+    res.sendFile(path.join(__dirname, '../public/notes.html'))
+);
 
-
-
-module.exports = router;
+module.exports = htmlRouter;
