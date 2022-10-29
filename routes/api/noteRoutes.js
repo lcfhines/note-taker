@@ -1,11 +1,12 @@
 const noteRouter = require('express').Router();
-// const { readFromFile, readAndAppend } = require("fsUtils.js");
+const path = require('path');
+const { readFromFile, writeToFile, readAndAppend } = require('../helpers/fsUtils');
 
 
 // GET route for retrieving notes
-// router.get('*', (req, res) => {
-//     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
-// });
+router.get('*', (req, res) => {
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
+});
 
 // POST route for new note
 
