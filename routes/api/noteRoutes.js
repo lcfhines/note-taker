@@ -3,16 +3,13 @@ const { response } = require('express');
 const { fstat } = require('fs');
 const path = require('path');
 // const db = require('./db/db.json');
-const { v4: uuidv4 } = require('uuid');
-// const { readFromFile, writeToFile, readAndAppend } = require('../helpers/fsUtils');
+// const { v4: uuidv4 } = require('uuid');
+const { readFromFile, readAndAppend } = require('../../helpers/fsUtils');
 
 
 // GET route for retrieving notes
-noteRouter.get('/api/notes', (req, res) => {
-    // fs.readFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
-    const notesData = fs.readFileSync(path.join(__dirname, './db/db.json'), 'utf-8');
-    const notesParsed = JSON.parse(notesData);
-    res.json(notesParsed);
+noteRouter.get('/notes', (req, res) => {
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 // POST route for submitting new note
@@ -21,35 +18,20 @@ noteRouter.post('/api/notes', (req, res) => {
 
     const { title, text } = req.body;
 
-    if (title && text) {
+    if (req.body) {
         const newNote = {
             title,
             text,
-            id: uuidv4();
+            id: uuidv4(),
         };
-    
 
-    const noteString = JSON.stringify(newNote);
-
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        if (err){
-            console.error(err);
-        } else {
-            const parsedNotes = JSON.parse(data);
-            parsedNotes.push(noteString);
-            writeToFile('./db/db.json', parsedNotes);
-        }
-    });
-
-    const response = {
-        status: 'success',
-        body: newNote,
-    };
-    res.json(response);
+        readAndAppend(newNote, './db/db.json');
+        res.json('note added successfully'); 
     } else {
-        res.error('error in posting note');
+        res.error('error in adding tip');
     }
 });
+
 
 // POST route for displaying stored titles
 
