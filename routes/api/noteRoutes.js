@@ -34,6 +34,13 @@ notesRouter.post('/', (req, res) => {
 });
 
 
+// DELETE route for removing specific note
+    // need to use id
+
+// notesRouter.delete('/:id', (req, res) => {
+
+
+// })
 
 
 
