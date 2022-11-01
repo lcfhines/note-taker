@@ -1,19 +1,21 @@
-const noteRouter = require('express').Router();
+const router = require('express').Router();
 const { response } = require('express');
 const { fstat } = require('fs');
 const path = require('path');
 // const db = require('./db/db.json');
-// const { v4: uuidv4 } = require('uuid');
+
+// helpers stored in helpers directory
 const { readFromFile, readAndAppend } = require('../../helpers/fsUtils');
+const uuid = require('../../helpers/uuid');
 
 
 // GET route for retrieving notes
-noteRouter.get('/notes', (req, res) => {
-    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+router.get('/', async (req, res) => {
+    readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
 });
 
 // POST route for submitting new note
-noteRouter.post('/api/notes', (req, res) => {
+router.post('/', (req, res) => {
     console.log(req.body);
 
     const { title, text } = req.body;
@@ -22,7 +24,7 @@ noteRouter.post('/api/notes', (req, res) => {
         const newNote = {
             title,
             text,
-            id: uuidv4(),
+            id: uuid(),
         };
 
         readAndAppend(newNote, './db/db.json');
@@ -37,4 +39,4 @@ noteRouter.post('/api/notes', (req, res) => {
 
 
 
-module.exports = noteRouter;
+module.exports = router;

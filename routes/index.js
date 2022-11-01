@@ -8,7 +8,7 @@ const apiRoutes = require("./api")
     router.use(htmlRoutes)
 
 // API ROUTES
-    router.use(apiRoutes)
+    router.use("/api", apiRoutes)
 
 
 
