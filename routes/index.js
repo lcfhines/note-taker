@@ -5,11 +5,10 @@ const apiRoutes = require("./api")
 
 
 // HTML ROUTES
-    router.use(htmlRoutes)
+router.use(htmlRoutes)
 
 // API ROUTES
-    router.use("/api", apiRoutes)
-
+router.use("/api", apiRoutes)
 
 
 module.exports = router;
